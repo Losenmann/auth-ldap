@@ -11,8 +11,13 @@ parser = argparse.ArgumentParser(description="Home Assistant LDAP authentication
 parser.add_argument('-m', '--meta', action='store_true', help='Enable meta to output credentials to stdout')
 args = parser.parse_args()
 
+ENVFILE = "{}/.env.ini".format(sys.path[0])
 config = configparser.ConfigParser()
-config.read("{}/.env.ini".format(sys.path[0]))
+if os.path.exists(ENVFILE):
+    config.read(ENVFILE)
+else:
+    print("# Missing configuration file:", ENVFILE)
+    exit(1)
 
 if 'username' not in os.environ and 'password' not in os.environ:
     print("# Username and password environment variables not set!")
