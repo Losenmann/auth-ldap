@@ -78,8 +78,8 @@ def main():
 
     auth = ldap(data)
 
-#    if args.photo and auth[2]:
-#        photo(auth[2])
+    if args.photo and auth[2]:
+        photo(auth[2])
 
     if args.meta:
         print("name=" + auth[0])
