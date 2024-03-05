@@ -1,4 +1,4 @@
-# homeassistant-auth-cli
+# Home Assistant Auth LDAP
 Python script for Homeassistant that will add LDAP authentication
 ## How it works
 
