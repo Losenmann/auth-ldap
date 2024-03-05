@@ -4,22 +4,25 @@ Python script for Homeassistant that will add LDAP authentication
 - Includes a [Home Assistant](https://www.home-assistant.io/docs/authentication/providers/#command-line)
 
 ## Installation
-Copy the Python script in to your `/config/python_scripts` directory or install via HACS.
+1. Copy the Python script in to your `/config/python_scripts` directory or install via HACS.
+2. Set file execution permissions: `chmod +x /config/python_scripts/auth-ldap.py`
+
+After each update, you must re-set execution rights. The easiest way is to create automation for setting rights at startup Home Assistant
 
 ## Script arguments
-key | required | type | example | description
--- | -- | -- | -- | --
-`-h` | False | boolean | - | Help
-`-m` | True | boolean | - | Enable meta to output credentials to stdout
-`-U` | True | string | - | LDAP username
-`-P` | True | string | - | LDAP user password
-`-s` | True | string | 'example.com' | Set LDAP server
-`-u` | True | string | 'uid={},ou=people,dc=example,dc=com' | Set LDAP USER DN
-`-b` | True | string | 'ou=people,dc=example,dc=com' | Set LDAP BASE DN
-`-f` | True | string | '(uid={})' | Set LDAP FILTER
-`-a` | True | string | -a 'givenName' -a 'memberof' | Set LDAP an array of attributes
-`-i` | False | boolean | - | Deactivate user account (Defaults to True)
-`-l` | False | boolean | - | The user can only login from the local network if the key is passed (Defaults to False)
+ key | type | example | description |
+ :-- | :--: | :-----: | :---------- |
+`-h` | boolean | - | Get help information
+`-m` | boolean | - | Enable meta to output credentials to stdout (Defaults to False)
+`-U` | string  | - | LDAP username
+`-P` | string  | - | LDAP user password
+`-s` | string  | `-s 'example.com'` | LDAP server
+`-u` | string  | `-u 'uid={},ou=people,dc=example,dc=com'` | LDAP USER DN
+`-b` | string  | `-b 'ou=people,dc=example,dc=com'` | LDAP BASE DN
+`-f` | string  | `-f '(uid={})'` | LDAP FILTER
+`-a` | string  | `-a 'givenName' -a 'memberof'` | Get an array of attributes
+`-i` | boolean | - | Deactivate user account (Defaults to True)
+`-l` | boolean | - | Access only from local network (Defaults to False)
 
 `{}` - is replaced by the username
 
@@ -37,8 +40,31 @@ homeassistant:
       args: ["-m", "-s", "example.com", "-u", "uid={},ou=people,dc=example,dc=com", "-b", "ou=people,dc=example,dc=com", "-f", "(uid={})", -a "givenName" -a "memberof"]
       meta: true
 ```
+When used as part of Home Assistant, there is no need to pass username(key -U) and password(key -P)
 - Use via CLI
 
-`auth-ldap.py -U 'username' -P 'password' -s openldap -u 'uid={},ou=people,dc=example,dc=com' -b 'ou=people,dc=example,dc=com' -f '(uid={})' -a givenName -a memberof`
+`auth-ldap.py -U 'username' -P 'password' -s 'example.com' -u 'uid={},ou=people,dc=example,dc=com' -b 'ou=people,dc=example,dc=com' -f '(uid={})' -a givenName -a memberof`
 
 If authentication is successful, return code is 0 otherwise 1
+
+## Additional information
+The LDAP server must support the `memberof` module. There should be an entry in the configuration: `olcModuleload: memberof.so`. In Alpine Linux, the module can be installed like this: `apk add openldap-overlay-memberof`
+
+The structure of the LDAP tree should look like this:
+```
+cn=system-admin,cn=homeassistant,dc=example,dc=com
+cn=system-users,cn=homeassistant,dc=example,dc=com
+```
+
+Users can be added to a parent group:
+```
+cn=homeassistant,dc=example,dc=com
+```
+In this case, members of the parent group will have rights `system-users`
+
+Prospective users must have the following attributes:
+- uid
+- givenName
+- memberof
+
+If the `givenName` attribute is missing, then the login will be used as the username
