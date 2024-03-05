@@ -1,4 +1,6 @@
 # Home Assistant Auth LDAP
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
 Python script for Homeassistant that will add LDAP authentication
 ## How it works
 - Includes a [Home Assistant](https://www.home-assistant.io/docs/authentication/providers/#command-line)
