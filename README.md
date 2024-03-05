@@ -13,7 +13,7 @@ After each update, you must re-set execution rights. The easiest way is to creat
  key | type | example | description |
  :-- | :--: | :-----: | :---------- |
 `-h` | boolean | - | Get help information
-`-m` | boolean | - | Enable meta to output credentials to stdout (Defaults to False)
+`-m` | boolean | - | Enable meta to output credentials to stdout<br>(Defaults to False)
 `-U` | string  | - | LDAP username
 `-P` | string  | - | LDAP user password
 `-s` | string  | `-s 'example.com'` | LDAP server
@@ -21,8 +21,8 @@ After each update, you must re-set execution rights. The easiest way is to creat
 `-b` | string  | `-b 'ou=people,dc=example,dc=com'` | LDAP BASE DN
 `-f` | string  | `-f '(uid={})'` | LDAP FILTER
 `-a` | string  | `-a 'givenName' -a 'memberof'` | Get an array of attributes
-`-i` | boolean | - | Deactivate user account (Defaults to True)
-`-l` | boolean | - | Access only from local network (Defaults to False)
+`-i` | boolean | - | Deactivate user account<br>(Defaults to True)
+`-l` | boolean | - | Access only from local network<br>(Defaults to False)
 
 `{}` - is replaced by the username
 
