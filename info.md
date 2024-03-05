@@ -23,7 +23,7 @@ key | required | type | example | description
 
 `{}` - is replaced by the username
 
-Connection and search data can be read from the [.env.ini](.env.ini) configuration file located next to the module.
+Connection and search data can be read from the [.env.ini](https://github.com/Losenmann/ha-auth-ldap/blob/master/.env.ini) configuration file located next to the module.
 
 ## Usage
 The module can be used as part of Home Assistant or separately via the CLI
