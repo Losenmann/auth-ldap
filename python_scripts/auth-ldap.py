@@ -157,7 +157,7 @@ def person(i=None):
         i = "/api/image/serve/" + hashlib.md5(os.urandom(32)).hexdigest() + "/512x512"
     p = {"id": "usertest","name":"test","user_id":"","device_trackers":[],"user_id":"null","picture":i}
     print(p)
-################
+
     async def async_create_person(hass, name, *, user_id=None, device_trackers=None):
         """Create a new person."""
         await hass.data[DOMAIN][1].async_create_item(
