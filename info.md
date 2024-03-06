@@ -39,7 +39,7 @@ homeassistant:
   auth_providers:
     - type: command_line
       command: /config/python_scripts/auth-ldap.py
-      args: ["-m", "-s", "example.com", "-u", "uid={},ou=people,dc=example,dc=com", "-b", "ou=people,dc=example,dc=com", "-f", "(uid={})", -a "givenName" -a "memberof"]
+      args: ["-m", "-s", "example.com", "-u", "uid={},ou=people,dc=example,dc=com", "-b", "ou=people,dc=example,dc=com", "-f", "(uid={})", "-a", "givenName", "-a", "memberof"]
       meta: true
 ```
 When used as part of Home Assistant, there is no need to pass username(key -U) and password(key -P)
