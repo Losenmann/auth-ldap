@@ -1,0 +1,6 @@
+{
+  "name": "Auth LDAP",
+  "homeassistant": "2025.2.2",
+  "zip_release": false,
+  "country": "NO"
+}
